@@ -1,20 +1,20 @@
 # netdot-boxes
 
-Simple Godot deterministic network physics example with falling boxes. Pressing `w` spawns a new box with a random colour and rotation which is removed from the scene after 5 seconds.
+Simple Godot synchronised network physics example with falling boxes. Pressing `w` spawns a new box with a random colour and rotation which is removed from the scene after 5 seconds.
 
-## Deterministic vs Non-deterministic
+## Synchronised vs Unsynchronised
 
-*Left*: client and server viewing deterministic output for physics computed by the server.
+*Left*: client and server viewing synchronised output for physics computed by the server.
 
-*Right*: client and server viewing their own non-deterministic physics simulation causing desync.
+*Right*: client and server viewing their own unsynchronised physics simulation causing desync.
 
-![comparison-gif](other/comparison.gif)
+![comparison-gif](other/sync-vs-desync.gif)
 
-## Non-deterministic Overlay
+## Unsynchronised Overlay
 
-It's easier to see the consequences of non-deterministic output when overlapping the two scenes. 
+It's easier to see the consequences of unsynchronised output when overlapping the two scenes. 
 
-![overlay-gif](other/non-deterministic.gif)
+![overlay-gif](other/unsynchronised.gif)
 
 These kind of mismatches may be perfectly fine for a lot of game mechanics. However, games that rely on peers seeing the same physics outcomes will break due to this type of desync.
 
