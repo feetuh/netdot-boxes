@@ -27,7 +27,7 @@ func _run_update_state_timer():
 	timer.autostart = true
 	get_tree().get_root().add_child(timer)
 
-func make(product_enum: int, params):
+func make(product_enum: int, params={}):
 	var product: Node = product_paths[product_enum].instance()
 	var uuid = UUID.v4()
 	product.name = uuid
@@ -35,18 +35,20 @@ func make(product_enum: int, params):
 	var uuid_idx = state.size()
 	state.append(network_entity)
 	uuid_to_index[uuid] = uuid_idx
-	rpc("make_peers", product_enum, uuid, params, uuid_idx)
+	rpc("make_peers", product_enum, uuid, uuid_idx, params)
 	map_scene.add_child(product)
-	product.init(params)
+	if product.has_method("init"):
+		product.init(params)
 
-remote func make_peers(product_enum: int, uuid: String, params, uuid_idx: int):
+remote func make_peers(product_enum: int, uuid: String, uuid_idx: int, params={}):
 	var product: Node = product_paths[product_enum].instance()
 	product.name = uuid
 	uuid_to_index[uuid] = uuid_idx
 	var network_entity = product.get_node("NetworkEntity")
 	state.append(network_entity)
 	map_scene.add_child(product)
-	product.init(params)
+	if product.has_method("init"):
+		product.init(params)
 
 func register_state(uuid, params):
 	var index = uuid_to_index[uuid]
